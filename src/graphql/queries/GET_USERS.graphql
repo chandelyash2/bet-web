@@ -1,0 +1,16 @@
+query GetUsers($input: UsersInput) {
+  getUsers(input: $input) {
+    user {
+      id
+      name
+      userName
+      phone
+      password
+      role
+    }
+    error {
+      message
+      code
+    }
+  }
+}
