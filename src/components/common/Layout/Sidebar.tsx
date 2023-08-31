@@ -20,19 +20,12 @@ const Sidebar = () => {
       return item;
     }
   });
-  console.log(selectedItem,"selele");
   
-  const listArray =  newList.push(selectedItem);
-  console.log(listArray,"listArray");
-  
-
-  const mapList =
-    router.pathname !== "/" && listArray?.length > 0 ? newList : listing;
 
   return (
     <div className="hidden lg:flex flex-col border border-orange-600 rounded-xl mt-6 h-[480px] w-[200px] ">
       <ul className="flex flex-col gap-4 items-left text-lg font-bold p-2">
-        {mapList.map((item) => (
+        {listing.map((item) => (
           <li
             key={item.link}
             className={twMerge("flex gap-2 items-center w-full")}
