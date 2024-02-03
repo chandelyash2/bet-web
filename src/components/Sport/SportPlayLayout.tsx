@@ -15,10 +15,10 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
       console.log("Connected to the socket server");
     });
     socket.on("apiResponse", (data) => {
-      if (data.success) {
-        console.log(data, "toasss");
-        return toast(data);
-      }
+      // if (data.success) {
+      //   console.log(data, "toasss");
+      //   return toast(data);
+      // }
     });
     // return () => {
     //     socket.disconnect();
