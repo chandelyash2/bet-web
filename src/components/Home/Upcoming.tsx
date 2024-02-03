@@ -35,12 +35,8 @@ export const Upcoming = () => {
         <Image src="/img/upcoming.png" width={30} height={30} alt="play" />
         <h2 className="text-xl font-bold">Upcoming</h2>
       </div>
-      <PlayLayout
-        label="Upcoming"
-        img="/img/cricket.png"
-        list={upcomingCricketData}
-      />
-      <PlayLayout label="Upcoming" img="/img/badminton.png" list={badminton} />
+      <PlayLayout  event={upcomingCricketData} />
+      <PlayLayout  event={badminton} />
     </div>
   );
 };

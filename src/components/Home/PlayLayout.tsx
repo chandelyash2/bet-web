@@ -25,7 +25,7 @@ export const PlayLayout = ({ event }: PlayLayoutProps) => {
         </div>
       </div>
       <div className="bg-white rounded-b-lg">
-        {event?.dates?.map((item) => (
+        {event?.dates?.map((item:any) => (
           <div
             className="flex text-primary items-center p-2 px-4 border-t cursor-pointer"
             key={item.id}
