@@ -1,58 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "../common/Layout";
 import Container from "../common/Container";
 import { PlayLayout } from "../Home/PlayLayout";
 import { SportPlayLayout } from "./SportPlayLayout";
-const liveCricketData = [
-  {
-    teamA: "India",
-    teamB: "Australia",
-    odds: {
-      a: "2",
-      b: "3",
-    },
-    time: "",
-  },
-  {
-    teamA: "Afghanistan",
-    teamB: "Bangladesh",
-    odds: {
-      a: "1.2",
-      b: "3.4",
-    },
-    time: "",
-  },
-];
-const upcomingCricketData = [
-  {
-    teamA: "England",
-    teamB: "Austria",
-    odds: {
-      a: "2",
-      b: "3",
-    },
-    time: "Saturday at 1:00 PM",
-  },
-  {
-    teamA: "South Africa",
-    teamB: "Newzeland",
-    odds: {
-      a: "1.2",
-      b: "3.4",
-    },
-    time: "Sunday at 3:00 PM",
-  },
-];
+import axios from "axios";
+import { useRouter } from "next/router";
+import { Loader } from "../common/Loader";
+
 export const Sport = () => {
+  const [eventData, setEventData] = useState();
+
+  const router = useRouter();
+  const { sport, league, event } = router.query;
+  useEffect(() => {
+    let interval = setInterval(async () => {
+      fetchMathcData();
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [sport]);
+
+  const fetchMathcData = async () => {
+    const result = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/get-event`,
+      {
+        params: {
+          sport,
+          league,
+          event,
+        },
+      }
+    );
+    result.data && setEventData(result.data.event);
+  };
+
   return (
     <Layout>
       <Container>
-        <div className="flex flex-col gap-6">
-          <SportPlayLayout />
-          <SportPlayLayout /> 
-          <SportPlayLayout />
-           <SportPlayLayout />
-        </div>
+        {eventData ? (
+          <div className="flex flex-col gap-6">
+            <SportPlayLayout data={eventData} />
+          </div>
+        ) : (
+          <Loader />
+        )}
       </Container>
     </Layout>
   );

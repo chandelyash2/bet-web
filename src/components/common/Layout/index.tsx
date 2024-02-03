@@ -13,9 +13,9 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="absolute top-0 w-full z-1 flex flex-col h-full justify-between">
       <Header />
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="flex p-4">
-        <Sidebar />
+        {/* <Sidebar /> */}
         {children}
       </div>
       <Footer />
