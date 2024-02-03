@@ -43,16 +43,13 @@ export const Header = () => {
     <header>
       <Container>
         <div className="hidden lg:flex justify-between">
-          <Link href="/">
-            <Image src="/logo.png" alt="logo" width="150" height="150" />
-          </Link>
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             <PrimaryButton
               label="Login"
               handleClick={() => router.push("/login")}
             />
             <PrimaryButton label="Register" />
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-between lg:hidden">
           <Image src="/logo.png" alt="logo" width="100" height="100" />

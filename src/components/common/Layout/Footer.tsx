@@ -8,7 +8,6 @@ export const Footer = () => {
       <Container>
         <div className="flex flex-col gap-4">
           <div className="flex text-center justify-center lg:justify-between">
-            <Image src="/logo.png" alt="logo" width="150" height="150" />
             <div className="hidden lg:flex gap-4">
               <span>Game</span>
               <span>Company</span>
@@ -17,7 +16,7 @@ export const Footer = () => {
           </div>
           <hr className="w-full h-2" />
           <div className="flex justify-between">
-            <span className="font-semibold">All rights reserved © 2023</span>
+            <span className="font-semibold">All rights reserved © { new Date().getFullYear()}</span>
             <span className="flex gap-4">
               <Image
                 src="/img/instagram.png"
