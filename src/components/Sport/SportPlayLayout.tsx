@@ -3,22 +3,27 @@ import moment from "moment";
 import { PrimaryButton } from "../common/PrimaryButton";
 import socket from "@/socket";
 import { twMerge } from "tailwind-merge";
-import toast, { ToastBar, Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { Loader } from "../common/Loader";
 export const SportPlayLayout = ({ data }: { data: any }) => {
   const [addStake, setAddStake] = useState({
     odds: 0,
     team: "",
     type: "",
   });
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to the socket server");
     });
     socket.on("apiResponse", (data) => {
-      // if (data.success) {
-      //   console.log(data, "toasss");
-      //   return toast(data);
-      // }
+      setLoading(false);      
+      const pasredData = data.data;
+      if (pasredData.error) {
+        toast.error(pasredData.error);
+      } else {
+        toast.success(pasredData.success);
+      }
     });
     // return () => {
     //     socket.disconnect();
@@ -32,6 +37,7 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
     });
   };
   const placeBet = () => {
+    setLoading(true);
     const obj = {
       data: {
         // url: `https://www.victoryexch.com/events/${data.slug}/${data.sport_id}/${data.league_id}/${data.id}`,
@@ -252,7 +258,7 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
           </div>
         </>
       )}
-      <Toaster />
+
       {addStake.odds > 0 && (
         <div className="flex gap-4 mt-10 bg-pink-200 w-full p-4 items-center">
           <h2 className="text-header font-semibold">
@@ -278,6 +284,8 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
           />
         </div>
       )}
+      {loading && <Loader />}
+      <Toaster />
     </div>
   );
 };
