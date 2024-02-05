@@ -5,6 +5,7 @@ import socket from "@/socket";
 import { twMerge } from "tailwind-merge";
 import toast, { Toaster } from "react-hot-toast";
 import { Loader } from "../common/Loader";
+import Link from "next/link";
 export const SportPlayLayout = ({ data }: { data: any }) => {
   const [addStake, setAddStake] = useState({
     odds: 0,
@@ -17,7 +18,7 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
       console.log("Connected to the socket server");
     });
     socket.on("apiResponse", (data) => {
-      setLoading(false);      
+      setLoading(false);
       const pasredData = data.data;
       if (pasredData.error) {
         toast.error(pasredData.error);
@@ -50,7 +51,10 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
     setAddStake({ odds: 0, team: "", type: "" });
   };
   return (
-    <div>
+    <div className="flex flex-col gap-6">
+      <Link href="/">
+        <PrimaryButton label="<= Back to home" />
+      </Link>
       {data?.id && (
         <>
           <div className="relative">
@@ -59,105 +63,118 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
                 <h1>{data.event_name}</h1>
                 <h2>{moment(data.event_date).format("DD-MMMM-YYYY HH:mm")}</h2>
               </div>
-              <div className="hidden lg:grid flex-[1.5] z-[999]  grid-cols-2 lg:grid-cols-6">
+              <div className="hidden  flex-[1.5] z-[999] md:flex justify-around">
                 <span>Back</span>
                 <span>Lay</span>
               </div>
             </div>
           </div>
-          <div className=" bg-white text-primary rounded-b-lg p-4 font-bold">
+          <div className="bg-white text-primary rounded-b-lg p-4 font-bold">
             <div className="flex">
               <div className="flex-[1.5]">
                 <h1>{data.runners[0]}</h1>
               </div>
-              <div className="flex-[1.5]  grid grid-cols-2 lg:grid-cols-6">
-                <span
-                  className="bg-blue-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+              <div className="flex-[1.5] flex flex-col gap-4 md:flex-row justify-between">
+                <div className="flex gap-4">
+                  <span
+                    className="bg-blue-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[0].ex?.availableToBack[2]
+                          ?.price,
+                        data.runners[0],
+                        "back"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[0].ex?.availableToBack[2]
-                        ?.price,
-                      data.runners[0],
-                      "back"
-                    )
-                  }
-                >
-                  {
-                    data.markets[0].data.runners[0].ex?.availableToBack[2]
-                      ?.price
-                  }
-                </span>
-                <span
-                  className="bg-blue-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+                        ?.price
+                    }
+                  </span>
+                  <span
+                    className="bg-blue-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[0].ex?.availableToBack[1]
+                          ?.price,
+                        data.runners[0],
+                        "back"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[0].ex?.availableToBack[1]
-                        ?.price,
-                      data.runners[0],
-                      "back"
-                    )
-                  }
-                >
-                  {
-                    data.markets[0].data.runners[0].ex?.availableToBack[1]
-                      ?.price
-                  }
-                </span>
-                <span
-                  className="bg-blue-300 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+                        ?.price
+                    }
+                  </span>
+                  <span
+                    className="bg-blue-300 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[0].ex?.availableToBack[0]
+                          ?.price,
+                        data.runners[0],
+                        "back"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[0].ex?.availableToBack[0]
-                        ?.price,
-                      data.runners[0],
-                      "back"
-                    )
-                  }
-                >
-                  {
-                    data.markets[0].data.runners[0].ex?.availableToBack[0]
-                      ?.price
-                  }
-                </span>
-                <span
-                  className="bg-pink-300 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+                        ?.price
+                    }
+                  </span>
+                </div>
+                <div className="flex gap-4">
+                  <span
+                    className="bg-pink-300 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[0].ex?.availableToLay[0]
+                          ?.price,
+                        data.runners[0],
+                        "lay"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[0].ex?.availableToLay[0]
-                        ?.price,
-                      data.runners[0],
-                      "lay"
-                    )
-                  }
-                >
-                  {data.markets[0].data.runners[0].ex?.availableToLay[0]?.price}
-                </span>
-                <span
-                  className="bg-pink-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+                        ?.price
+                    }
+                  </span>
+                  <span
+                    className="bg-pink-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[0].ex?.availableToLay[1]
+                          ?.price,
+                        data.runners[0],
+                        "lay"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[0].ex?.availableToLay[1]
-                        ?.price,
-                      data.runners[0],
-                      "lay"
-                    )
-                  }
-                >
-                  {data.markets[0].data.runners[0].ex?.availableToLay[1]?.price}
-                </span>
-                <span
-                  className="bg-pink-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+                        ?.price
+                    }
+                  </span>
+                  <span
+                    className="bg-pink-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[0].ex?.availableToLay[2]
+                          ?.price,
+                        data.runners[0],
+                        "lay"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[0].ex?.availableToLay[2]
-                        ?.price,
-                      data.runners[0],
-                      "lay"
-                    )
-                  }
-                >
-                  {data.markets[0].data.runners[0].ex?.availableToLay[2]?.price}
-                </span>
+                        ?.price
+                    }
+                  </span>
+                </div>
               </div>
             </div>
             <hr className="m-2" />
@@ -165,94 +182,107 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
               <div className="flex-[1.5]">
                 <h1>{data.runners[1]}</h1>
               </div>
-              <div className="flex-[1.5] grid grid-cols-2 lg:grid-cols-6">
-                <span
-                  className="bg-blue-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+              <div className="flex-[1.5] flex flex-col gap-4 md:flex-row justify-between">
+                <div className="flex gap-4">
+                  <span
+                    className="bg-blue-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[1].ex?.availableToBack[2]
+                          ?.price,
+                        data.runners[1],
+                        "back"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[1].ex?.availableToBack[2]
-                        ?.price,
-                      data.runners[1],
-                      "back"
-                    )
-                  }
-                >
-                  {
-                    data.markets[0].data.runners[1].ex?.availableToBack[2]
-                      ?.price
-                  }
-                </span>{" "}
-                <span
-                  className="bg-blue-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+                        ?.price
+                    }
+                  </span>{" "}
+                  <span
+                    className="bg-blue-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[1].ex?.availableToBack[1]
+                          ?.price,
+                        data.runners[1],
+                        "back"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[1].ex?.availableToBack[1]
-                        ?.price,
-                      data.runners[1],
-                      "back"
-                    )
-                  }
-                >
-                  {
-                    data.markets[0].data.runners[1].ex?.availableToBack[1]
-                      ?.price
-                  }
-                </span>
-                <span
-                  className="bg-blue-300 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+                        ?.price
+                    }
+                  </span>
+                  <span
+                    className="bg-blue-300 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[1].ex?.availableToBack[0]
+                          ?.price,
+                        data.runners[1],
+                        "back"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[1].ex?.availableToBack[0]
-                        ?.price,
-                      data.runners[1],
-                      "back"
-                    )
-                  }
-                >
-                  {
-                    data.markets[0].data.runners[1].ex?.availableToBack[0]
-                      ?.price
-                  }
-                </span>
-                <span
-                  className="bg-pink-300 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+                        ?.price
+                    }
+                  </span>
+                </div>
+                <div className="flex gap-4">
+                  <span
+                    className="bg-pink-300 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[1].ex?.availableToLay[0]
+                          ?.price,
+                        data.runners[1],
+                        "lay"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[1].ex?.availableToLay[0]
-                        ?.price,
-                      data.runners[1],
-                      "lay"
-                    )
-                  }
-                >
-                  {data.markets[0].data.runners[1].ex?.availableToLay[0]?.price}
-                </span>
-                <span
-                  className="bg-pink-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+                        ?.price
+                    }
+                  </span>
+                  <span
+                    className="bg-pink-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[1].ex?.availableToLay[1]
+                          ?.price,
+                        data.runners[1],
+                        "lay"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[1].ex?.availableToLay[1]
-                        ?.price,
-                      data.runners[1],
-                      "lay"
-                    )
-                  }
-                >
-                  {data.markets[0].data.runners[1].ex?.availableToLay[1]?.price}
-                </span>
-                <span
-                  className="bg-pink-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
-                  onClick={() =>
-                    handleStake(
+                        ?.price
+                    }
+                  </span>
+                  <span
+                    className="bg-pink-100 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer"
+                    onClick={() =>
+                      handleStake(
+                        data.markets[0].data.runners[1].ex?.availableToLay[2]
+                          ?.price,
+                        data.runners[1],
+                        "lay"
+                      )
+                    }
+                  >
+                    {
                       data.markets[0].data.runners[1].ex?.availableToLay[2]
-                        ?.price,
-                      data.runners[1],
-                      "lay"
-                    )
-                  }
-                >
-                  {data.markets[0].data.runners[1].ex?.availableToLay[2]?.price}
-                </span>
+                        ?.price
+                    }
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -260,15 +290,15 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
       )}
 
       {addStake.odds > 0 && (
-        <div className="flex gap-4 mt-10 bg-pink-200 w-full p-4 items-center">
+        <div
+          className={twMerge(
+            "flex flex-col gap-4 mt-10  w-full p-4 items-center md:flex-row rounded-lg",
+            addStake.type === "back" ? "bg-blue-300" : "bg-pink-300"
+          )}
+        >
           <h2 className="text-header font-semibold">
-            {addStake.team}{" "}
-            <span
-              className={
-                (twMerge("font-bold"),
-                addStake.type === "back" ? "text-blue-500" : "text-pink-500")
-              }
-            >
+            {addStake.team}
+            <span className="font-bold">
               ( {addStake.type.toLocaleUpperCase()})
             </span>
           </h2>
