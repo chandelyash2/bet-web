@@ -34,7 +34,8 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
   const placeBet = () => {
     const obj = {
       data: {
-        url: `https://www.victoryexch.com/events/${data.slug}/${data.sport_id}/${data.league_id}/${data.id}`,
+        // url: `https://www.victoryexch.com/events/${data.slug}/${data.sport_id}/${data.league_id}/${data.id}`,
+        event_name: data.event_name,
         odds: addStake.odds,
         stakes: 100,
       },
@@ -49,9 +50,7 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
           <div className="relative">
             <div className="items-center flex w-full bg-secondary p-2 px-4 rounded-lg lg:before:content-[''] lg:before:absolute lg:before:right-0 lg:before:w-[55%] lg:before:top-0 lg:before:h-[100%] lg:before:bg-primary lg:before:rounded-r-lg font-bold">
               <div className="flex-[1.5]">
-                <h1>
-                  {data.runners[0]} V {data.runners[1]}
-                </h1>
+                <h1>{data.event_name}</h1>
                 <h2>{moment(data.event_date).format("DD-MMMM-YYYY HH:mm")}</h2>
               </div>
               <div className="hidden lg:grid flex-[1.5] z-[999]  grid-cols-2 lg:grid-cols-6">

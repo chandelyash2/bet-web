@@ -1,4 +1,3 @@
-
 import { useRouter } from "next/router";
 type comingData = {
   teamA: string;
@@ -25,7 +24,7 @@ export const PlayLayout = ({ event }: PlayLayoutProps) => {
         </div>
       </div>
       <div className="bg-white rounded-b-lg">
-        {event?.dates?.map((item:any) => (
+        {event?.dates?.map((item: any) => (
           <div
             className="flex text-primary items-center p-2 px-4 border-t cursor-pointer"
             key={item.id}
@@ -41,8 +40,7 @@ export const PlayLayout = ({ event }: PlayLayoutProps) => {
             }}
           >
             <div className="flex-col flex-[1.5] font-bold">
-              <h2>{item.runners[0]}</h2>
-              <h2>{item.runners[1]}</h2>
+              <h2>{item.event_name}</h2>
             </div>
             <div className="flex z-[999] flex-[1.5] justify-between">
               <span className="bg-blue-300 p-1 rounded-lg w-10 lg:w-14 text-center text-sm lg:text-md cursor-pointer">

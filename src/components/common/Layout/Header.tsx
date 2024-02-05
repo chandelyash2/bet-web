@@ -52,15 +52,15 @@ export const Header = () => {
           </div> */}
         </div>
         <div className="flex justify-between lg:hidden">
-          <Image src="/logo.png" alt="logo" width="100" height="100" />
-          <Image
+          {/* <Image src="/logo.png" alt="logo" width="100" height="100" /> */}
+          {/* <Image
             src="/hamburger.png"
             alt="logo"
             width="30"
             height="30"
             className="cursor-pointer"
             onClick={() => setMenuActive(true)}
-          />
+          /> */}
         </div>
         {menuActive && (
           <div className="absolute bg-header w-full h-full top-0 left-0 z-[9999] text-white">
