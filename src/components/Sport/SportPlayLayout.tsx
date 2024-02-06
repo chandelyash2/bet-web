@@ -6,11 +6,30 @@ import { twMerge } from "tailwind-merge";
 import toast, { Toaster } from "react-hot-toast";
 import { Loader } from "../common/Loader";
 import Link from "next/link";
+const stakesaArray = [
+  {
+    value: "100",
+    color: "yellow",
+  },
+  {
+    value: "500",
+    color: "red",
+  },
+  {
+    value: "1K",
+    color: "pink",
+  },
+  {
+    value: "2K",
+    color: "green",
+  },
+];
 export const SportPlayLayout = ({ data }: { data: any }) => {
   const [addStake, setAddStake] = useState({
     odds: 0,
     team: "",
     type: "",
+    stake: "",
   });
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -30,13 +49,20 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
     //     socket.disconnect();
     // };
   }, []);
-  const handleStake = (value: number, team: string, type: string) => {
+  const handleStake = (
+    value: number,
+    team: string,
+    type: string,
+    stake?: string
+  ) => {
     setAddStake({
       odds: value,
       team,
       type,
+      stake: stake ? stake : "",
     });
   };
+
   const placeBet = () => {
     setLoading(true);
     const obj = {
@@ -44,11 +70,11 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
         // url: `https://www.victoryexch.com/events/${data.slug}/${data.sport_id}/${data.league_id}/${data.id}`,
         event_name: data.event_name,
         odds: addStake.odds,
-        stakes: 100,
+        stakes: addStake.stake,
       },
     };
     socket.emit("clientMessage", obj);
-    setAddStake({ odds: 0, team: "", type: "" });
+    setAddStake({ odds: 0, team: "", type: "", stake: "" });
   };
   return (
     <div className="flex flex-col gap-6">
@@ -304,12 +330,42 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
           </h2>
 
           <input value={addStake.odds} className="text-black" />
-          <input placeholder="Stake" className="text-black" value={100} />
+          <input
+            placeholder="Stake"
+            className="text-black"
+            value={addStake.stake || 0}
+            onChange={(e) =>
+              setAddStake({
+                odds: addStake.odds,
+                team: addStake.team,
+                type: addStake.type,
+                stake: e.target.value,
+              })
+            }
+          />
+          <div className="flex gap-4">
+            {stakesaArray.map((item) => (
+              <span
+                key={item.value}
+                className={`text-black p-1 rounded-lg cursor-pointer bg-${item.color}-300`}
+                onClick={() =>
+                  setAddStake({
+                    odds: addStake.odds,
+                    team: addStake.team,
+                    type: addStake.type,
+                    stake: item.value,
+                  })
+                }
+              >
+                {item.value}
+              </span>
+            ))}
+          </div>
           <PrimaryButton label="Place Bet" handleClick={placeBet} />
           <PrimaryButton
             label="Close"
             handleClick={() => {
-              setAddStake({ odds: 0, team: "", type: "" });
+              setAddStake({ odds: 0, team: "", type: "", stake: "" });
             }}
           />
         </div>
