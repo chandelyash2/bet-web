@@ -9,19 +9,19 @@ import Link from "next/link";
 const stakesaArray = [
   {
     value: "100",
-    color: "yellow",
+    color: 'primary',
   },
   {
     value: "500",
-    color: "red",
+    color: "secondary",
   },
   {
     value: "1K",
-    color: "pink",
+    color: "header",
   },
   {
     value: "2K",
-    color: "green",
+    color: "primary",
   },
 ];
 export const SportPlayLayout = ({ data }: { data: any }) => {
@@ -347,7 +347,7 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
             {stakesaArray.map((item) => (
               <span
                 key={item.value}
-                className={`text-black p-1 rounded-lg cursor-pointer bg-${item.color}-300`}
+                className={`p-1 rounded-lg cursor-pointer bg-${item.color}`}
                 onClick={() =>
                   setAddStake({
                     odds: addStake.odds,
