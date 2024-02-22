@@ -25,7 +25,7 @@ interface InPlayProps {
 export const InPlay = ({ data }: InPlayProps) => {
   return (
     <div className="flex flex-col gap-6">
-      {data?.map((event:any) => (
+      {data?.map((event: any) => (
         <PlayLayout key={event.sportId} event={event} />
       ))}
     </div>

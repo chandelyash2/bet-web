@@ -34,7 +34,6 @@ export const Sport = () => {
     );
     result.data && setEventData(result.data.event);
   };
-
   return (
     <Layout>
       <Container>

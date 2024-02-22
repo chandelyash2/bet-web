@@ -35,6 +35,7 @@ export const PlayLayout = ({ event }: PlayLayoutProps) => {
                   sport: item.sport_id,
                   league: item.league_id,
                   event: item.id,
+                  sportName: event.name,
                 },
               });
             }}
