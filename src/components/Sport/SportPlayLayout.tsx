@@ -53,7 +53,7 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
       if (pasredData.error) {
         toast.error(pasredData.error);
       } else {
-        toast.success("Bet Placed");
+        toast.success("Bet Placed" + "-" + data.name);
       }
     });
     // return () => {
@@ -84,7 +84,7 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
         event_name: data.event_name,
         odds: addStake.odds,
         stakes: addStake.stake,
-        sportName,
+        sportName: sportName === "Soccer" ? "Football" : sportName,
       },
     };
     socket.emit("clientMessage", obj);
@@ -135,7 +135,6 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
           {data.markets[1] && (
             <ShowOdds data={data.markets[1]} handleStake={handleStake} />
           )}
-    
         </>
       )}
 
