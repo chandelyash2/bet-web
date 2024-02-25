@@ -85,6 +85,7 @@ export const SportPlayLayout = ({ data }: { data: any }) => {
         odds: addStake.odds,
         stakes: addStake.stake,
         sportName: sportName === "Soccer" ? "Football" : sportName,
+        type:addStake.type.toLocaleLowerCase()
       },
     };
     socket.emit("clientMessage", obj);
