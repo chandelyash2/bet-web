@@ -4,11 +4,13 @@ import Container from "../common/Container";
 import { InPlay } from "./InPlay";
 import axios, { all } from "axios";
 import { Loader } from "../common/Loader";
+import socket from "@/socket";
 const Home = () => {
   const [laoding, setLoading] = useState(false);
   const [inPlayData, setInPlayData] = useState<any>();
   useEffect(() => {
     fetchInPlay();
+    socket.emit("inHome","in homepage")
   }, []);
 
   const fetchInPlay = async () => {
